@@ -1,0 +1,180 @@
+<h1 class="mb-4">Course Management</h1>
+
+<!-- FORM -->
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        {{ editing ? 'Edit Course' : 'Add New Course' }}
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-2 mb-3">
+                <label>Course ID</label>
+
+                <input type="number" class="form-control" [(ngModel)]="newCourse.courseId">
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label>Title</label>
+
+                <input type="text" class="form-control" [(ngModel)]="newCourse.title">
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label>Lecturer</label>
+
+                <input type="text" class="form-control" [(ngModel)]="newCourse.lecturer">
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Description</label>
+
+            <textarea class="form-control" [(ngModel)]="newCourse.description"></textarea>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+
+                <label>Duration</label>
+
+                <input type="number" class="form-control" [(ngModel)]="newCourse.duration">
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <label>Category</label>
+
+                <select class="form-select" [(ngModel)]="newCourse.category">
+
+                    <option>Basic</option>
+                    <option>Graphics</option>
+                    <option>Coding</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+
+                <label>Image</label>
+
+                <input type="text" class="form-control" [(ngModel)]="newCourse.courseImage" placeholder="course6.png">
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label>Promote</label>
+
+                <div class="form-check mt-2">
+
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="newCourse.promote">
+
+                    <label class="form-check-label">
+                        Promote
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <button *ngIf="!editing" class="btn btn-success me-2" (click)="addCourse()">
+            Add Course
+        </button>
+
+        <button *ngIf="editing" class="btn btn-primary me-2" (click)="updateCourse()">
+            Update Course
+        </button>
+
+        <button *ngIf="editing" class="btn btn-secondary" (click)="cancelEdit()">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- COURSE TABLE -->
+
+<div class="table-responsive">
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Lecturer</th>
+                <th>Duration</th>
+                <th>Category</th>
+                <th>Promote</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let course of courses">
+
+                <td>{{ course.courseId }}</td>
+
+                <td>
+                    <img [src]="course.courseImage" width="80" height="60">
+                </td>
+
+                <td>{{ course.title }}</td>
+
+                <td>{{ course.lecturer }}</td>
+
+                <td>{{ course.duration }} hours</td>
+
+                <td>{{ course.category }}</td>
+
+                <td>
+                    <span *ngIf="course.promote" class="badge bg-success">
+                        Yes
+                    </span>
+
+                    <span *ngIf="!course.promote" class="badge bg-secondary">
+                        No
+                    </span>
+                </td>
+
+                <td>
+
+                    <button class="btn btn-warning btn-sm me-2" (click)="editCourse(course)">
+                        Edit
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" (click)="deleteCourse(course.courseId)">
+                        Delete
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
